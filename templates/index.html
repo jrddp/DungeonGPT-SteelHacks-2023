@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <header>
-            <img src="dungeonGPT.svg" alt="DungeonGPT Logo" class="logo">
+            <img src="{{ url_for('static', filename='DungeonGPT.svg') }}" alt="DungeonGPT Logo" class="logo">
         </header>
         <h1>Welcome to DungeonGPT!</h1>
         <p class="tagline">Embark on an epic adventure crafted by AI!</p>
@@ -20,7 +20,7 @@
             <li>Start the game and talk to the AI dungeon master to navigate through the game. Be creative in your responses, as they will ultimately decide how you maneuver through the game.</li>
         </ol>
         <div class="start-game">
-            <a href="character_creation.html" class="start-game-button">Start Game</a>
+            <a href="{{ url_for('character_creation') }}" class="start-game-button">Start Game</a>
         </div>
     </div>
 </body>
