@@ -56,11 +56,11 @@ def get_dm_message(player_msg):
     message_obj = {'role': 'user', 'content': player_msg}
     messages.append(message_obj)
 
-    # dm_response = openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo", messages=messages)
-
     dm_response = openai.ChatCompletion.create(
-        model='gpt-4', messages=messages)
+        model="gpt-3.5-turbo", messages=messages)
+
+    # dm_response = openai.ChatCompletion.create(
+    #     model='gpt-4', messages=messages)
     dm_message = dm_response['choices'][0]['message']['content']
 
     return dm_message
@@ -88,7 +88,7 @@ def generate_image(image_prompt):
     response = openai.Image.create(
         prompt=image_prompt,
         n = 1,
-        size = "512x512"
+        size = "256x256"
     )
     return response['data'][0]['url']
 

@@ -17,13 +17,12 @@
         <div id="dm-message">
             {{ dungeon_master_message }}
         </div>
-        <div id="img-container">
-        </div>
+        <img id="img-container"
+            src="{{ url_for('static', filename='spinner.gif') }}" alt="Image">
     </div>
-    <div>
+    <div id="player-response">
         <form id="player-response-form">
-            <label for="player_response">Your response:</label>
-            <input type="text" id="player_response" name="player_response" required>
+            <input type="text" id="player_response" name="player_response" placeholder="What will you do?" required>
             <button type="submit">Send</button>
         </form>
     </div>
