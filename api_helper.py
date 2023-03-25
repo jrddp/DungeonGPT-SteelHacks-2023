@@ -94,6 +94,30 @@ def generate_image(image_prompt):
     )
     return response['data'][0]['url']
 
+def generate_character_prompt(player_archetype):
+    openai.api_key = os.getenv("OPENAI_API_KEY_TEXT")
+    message_obj = {'role': 'user', 
+                   'content': f"imagine an description appearence of a character based on the description: {player_archetype if player_archetype else 'a barbarian'}"}
+    messages.append(message_obj)
+    model_engine = "gpt-3.5-turbo"
+    completions = openai.ChatCompletion.create(
+        model = model_engine,
+        messages = messages,
+        max_tokens=30,
+        temperature = 0.8
+    )
+    character_prompt = completions['choices'][0]['message']['content'] + ". In the style of a hearthstone character."
+    return character_prompt
+
+def generate_character_image(character_prompt):
+    openai.api_key = os.getenv("OPENAI_API_KEY_IMAGE")
+    response = openai.Image.create(
+        prompt=character_prompt,
+        n = 1,
+        size = "256x256"
+    )
+    return response['data'][0]['url']
+
 def transcribe(audio):
     openai.api_key = os.getenv("OPENAI_API_KEY_TEXT")
     audio_file = open(audio, "rb")

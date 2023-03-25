@@ -1,7 +1,5 @@
-import io
 import os
-from flask import Flask, render_template, request, jsonify
-import base64
+from flask import Flask, redirect, render_template, request, jsonify, url_for
 
 import azure.cognitiveservices.speech as speechsdk
 
@@ -74,28 +72,25 @@ def process_audio():
 @app.route('/character_creation', methods=['GET', 'POST'])
 def character_creation():
     if request.method == 'POST':
-        if request.is_json:
-            data = request.get_json()
-            name = data.get('name')
-            archetype = data.get('archetype')
-            strength = data.get('strength')
-            dexterity = data.get('dexterity')
-            constitution = data.get('constitution')
-            intelligence = data.get('intelligence')
-            wisdom = data.get('wisdom')
-            charisma = data.get('charisma')
-            input_attributes = {'name': name,
-                                'archetype': archetype,
-                                'strength': strength,
-                                'dexterity': dexterity,
-                                'constitution': constitution,
-                                'intelligence': intelligence,
-                                'wisdom': wisdom,
-                                'charisma': charisma}
-            update_player_attributes(input_attributes)
-        else:
-            player_attributes = {'name': 'Invalid request received.'}
-        return jsonify({"player_attributes": player_attributes})
+        print(request.form)
+        data = request.form;
+        name = data['player_name']
+        description = data['player_description']
+        strength = data['strength']
+        dexterity = data['dexterity']
+        constitution = data['constitution']
+        intelligence = data['intelligence']
+        wisdom = data['wisdom']
+        charisma = data['charisma']
+        input_attributes = {'name': name,
+                            'strength': strength,
+                            'dexterity': dexterity,
+                            'constitution': constitution,
+                            'intelligence': intelligence,
+                            'wisdom': wisdom,
+                            'charisma': charisma}
+        update_player_attributes(input_attributes)
+        return redirect(url_for("gameplay"))
     else:
         return render_template('character_creation.html')
     

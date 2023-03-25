@@ -9,9 +9,19 @@ def test_generate_image(image_prompt):
     link = api_helper.generate_image(image_prompt)
     print(link)
 
+def test_generate_character_prompt(player_archetype):
+    result = api_helper.generate_character_prompt(player_archetype)
+    print(result)
+
+def test_generate_character_image(character_prompt):
+    link = api_helper.generate_character_image(character_prompt)
+    print(link)
+
 def main():
     tests = {"tgp": test_generate_prompt,
-             "tgi": test_generate_image}
+             "tgi": test_generate_image,
+             "tgcp": test_generate_character_prompt,
+             "tgci": test_generate_character_image,}
     if len(sys.argv) < 3:
         print("Test format error.")
         exit(1)
