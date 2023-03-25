@@ -36,8 +36,12 @@ Make sure your message is complete and is never more than 175 words.
 Ensure to be cognizant of the current and remaining states to create an intentional and complete resolution. 
 The story should be of length remaining quests.'''}
 
-def update_system_command():
+def update_system_command(session_data):
     global DM_SYSTEM_COMMAND
+
+    player_name = session_data.get('player_name')
+    player_description = session_data.get('player_description')
+    player_attributes = session_data.get('player_attributes')
 
     DM_SYSTEM_COMMAND = {'role': 'system',
                         'content': f'''You are a dungeon master for a dungeons and dragons game. 
@@ -61,7 +65,7 @@ def update_system_command():
     Ensure to be cognizant of the current and remaining states to create an intentional and complete resolution. 
     The story should be of length remaining quests.'''}
 
-    print(DM_SYSTEM_COMMAND)
+    messages[0] = DM_SYSTEM_COMMAND
 
 
 load_dotenv()
@@ -82,18 +86,6 @@ def update_player_attributes(attrs):
     player_attributes = attrs
 
 
-#Get players attributes including name attribute values and et al
-
-def player_attributes(player_msg):
-    #todo implement
-    return player_msg
-
-
-def decorate_player_message(player_msg):
-    """Uses gpt to determine relevant stat and add roll to the end of the player's original message"""
-    # todo implement
-    return player_msg
-
 def get_dm_message(player_msg):
     """sends full user message to openai api. this should be done after processing the message"""
     openai.api_key = os.getenv("OPENAI_API_KEY_TEXT")
@@ -105,7 +97,8 @@ def get_dm_message(player_msg):
     #     model="gpt-3.5-turbo", messages=messages)
 
     dm_response = openai.ChatCompletion.create(
-        model='gpt-4', messages=messages)
+        model='gpt-4', messages=messages,
+        temperature=0.7)
     dm_message = dm_response['choices'][0]['message']['content']
 
     return dm_message
@@ -116,11 +109,12 @@ def generate_prompt(dm_response):
     message_obj = {'role': 'user', 
                    'content': f'''extract lighting, location, and environment information from the following paragraph, make a DALLE prompt(natural language sentence) from it\n{dm_response}'''
                    }
-    messages.append(message_obj)
+    message_list = [message_obj]
+    # messages.append(message_obj)
     model_engine = "gpt-3.5-turbo"
     completions = openai.ChatCompletion.create(
         model = model_engine,
-        messages = messages,
+        messages = message_list,
         max_tokens=20,
         temperature = 0.1
     )
@@ -141,11 +135,12 @@ def generate_character_prompt(description):
     openai.api_key = os.getenv("OPENAI_API_KEY_TEXT")
     message_obj = {'role': 'user', 
                    'content': f"imagine an description appearence of a character based on the description: {description if description else 'a barbarian'}"}
-    messages.append(message_obj)
+    message_list = [message_obj]
+    # messages.append(message_obj)
     model_engine = "gpt-3.5-turbo"
     completions = openai.ChatCompletion.create(
         model = model_engine,
-        messages = messages,
+        messages = message_list,
         max_tokens=30,
         temperature = 0.8
     )

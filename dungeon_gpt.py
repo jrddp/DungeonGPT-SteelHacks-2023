@@ -1,7 +1,8 @@
 import os
-from flask import Flask, redirect, render_template, request, jsonify, url_for, send_file
+from flask import Flask, redirect, render_template, request, jsonify, session, url_for, send_file
 
 import azure.cognitiveservices.speech as speechsdk
+import wave
 
 
 from api_helper import (get_dm_message, generate_prompt, generate_image,
@@ -12,6 +13,7 @@ from api_helper import (get_dm_message, generate_prompt, generate_image,
 
 app = Flask(__name__)
 app.config['JSONIFY_MIMETYPE'] = 'application/json'
+app.secret_key = 'dev'
 
 speech_key = os.getenv("SPEECH_KEY")
 service_region = os.getenv("SPEECH_REGION")
@@ -63,7 +65,7 @@ def gameplay():
     else:
         # First-time rendering or initial state
         dungeon_master_message = "Welcome to the AI-powered dungeon game!"
-    return render_template('gameplay.html', dungeon_master_message=dungeon_master_message)
+    return render_template('gameplay.html', dungeon_master_message=dungeon_master_message, player_name=session.get('player_name'))
 
 
 @app.route('/process-image', methods=['POST'])
@@ -78,8 +80,10 @@ def process_image():
 @app.route('/process-audio', methods=['POST'])
 def process_audio():
     audio = request.files['audio']
-    player_message = transcribe(audio)
-    return get_dm_message_json(player_message)
+    audio_path = os.path.join('.tmp', 'audio.wav')
+    audio.save(audio_path)
+    player_message = transcribe(audio_path)
+    return jsonify({"player_message": player_message})
 
 
 @app.route('/character_creation', methods=['GET', 'POST'])
@@ -105,10 +109,11 @@ def character_creation():
                             'wisdom': wisdom,
                             'charisma': charisma}
 
-        update_player_name(player_name)
-        update_player_description(player_description)
-        update_player_attributes(input_attributes)
-        update_system_command()
+        session['player_name'] = player_name
+        session['player_description'] = player_description
+        session['player_attributes'] = input_attributes
+        update_system_command(session)
+
         return redirect(url_for("gameplay"))
     else:
         return render_template('character_creation.html')

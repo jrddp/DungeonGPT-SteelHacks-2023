@@ -11,20 +11,26 @@
 
 <body>
     <img src="{{ url_for('static', filename='DungeonGPT.svg') }}" alt="DungeonGPT Logo" class="logo">
-    <div id="story-content">
-        <div id="loading-spinner" style="display: none;">
-            <img src="{{ url_for('static', filename='spinner.gif') }}" alt="Loading...">
+    <div id="main-content">
+        <div id="story-content">
+            <div id="loading-spinner" style="display: none;">
+                <img src="{{ url_for('static', filename='spinner.gif') }}" alt="Loading...">
+            </div>
+            <div id="dm-message">
+                {{ dungeon_master_message }}
+            </div>
+            <img id="img-container" src="{{ url_for('static', filename='spinner.gif') }}" alt="Image">
         </div>
-        <div id="dm-message">
-            {{ dungeon_master_message }}
+        <div id="player-info">
+            <h2 id="player-name">{{ player_name }}</h2>
+            <img id="player-img" src="{{ url_for('static', filename='spinner.gif') }}" alt="Player image">
         </div>
-        <img id="img-container"
-            src="{{ url_for('static', filename='spinner.gif') }}" alt="Image">
     </div>
     <div id="player-response">
-        <button id="record-speech", class="start-recording"></button>"
+        <button id="record-speech" , class="start-recording">Rec</button>"
+        <button id="stop-speech" , class="stop-recording"></button>"
         <form id="player-response-form">
-            <input type="text" id="player_response" name="player_response" placeholder="What will you do?" required>
+            <input type="text" id="player-response-input" name="player_response" placeholder="What will you do?" required>
             <button type="submit">Send</button>
         </form>
         <p id="load-text">DungeonGPT is deciding your fate...</p>

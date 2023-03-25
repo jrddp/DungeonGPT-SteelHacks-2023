@@ -1,107 +1,134 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#player-info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+  height: 330px;
+}
+
+#player-img {
+  height: 256px;
 }
 
 .logo {
-    max-width: 80%;
-    margin-bottom: 30px;
+  max-width: 80%;
+  margin-bottom: 30px;
 }
 
 #story-content {
-    background-color: #ffffff;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 800px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 #dm-message {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #img-container {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #player-response {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 800px;
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+  width: 100%;
+  max-width: 800px;
+  height: 64px;
 }
 
 #player-response-form {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-#player_response {
-    flex-grow: 1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    outline: none;
-    margin-right: 10px;
+#player-response-input {
+  flex-grow: 1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
-#player_response:focus {
-    border-color: #0084ff;
+#player-response-input:focus {
+  border-color: #0084ff;
 }
 
 button {
-    background-color: #0084ff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+  background-color: #0084ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #0069d9;
+  background-color: #0069d9;
 }
 
 button:active {
-    background-color:   #005cb2;
+  background-color: #005cb2;
 }
 
 #load-text {
-    display: none;
-    font-size: 14px;
-    color: #999;
-    margin-top: 10px;
+  /* display: none; */
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  margin-top: 10px;
 }
 
-.start-recording {
-    background-image: url("/static/microphone.png");
-
+#record-speech {
+  background-image: url("/static/microphone.png");
+  background-size: cover;
+  /* width: 100px;
+    height: 100px; */
+  height: 54px;
+  border: none;
+  /* color: #0084ff; */
 }
 
-.stop-recording {
-    background-image: url("/static/pause.png");
+#main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* min-height: 100vh; */
+  width: 90%;
 }
