@@ -1,0 +1,14 @@
+body {
+  /* background-color: black; */
+}
+
+.story-content {
+  display: flex;
+  justify-content: space-between;
+
+  margin: auto;
+
+  height: 60vh;
+  width: 90vw;
+  border: 1px solid black;
+}

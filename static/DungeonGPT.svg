@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 818 144" style="enable-background:new 0 0 818 144;" xml:space="preserve">
+<style type="text/css">
+	.st0{font-family:'STSong';}
+	.st1{font-size:121px;}
+	.st2{fill:#4D4D4D;}
+	.st3{fill:#002D5F;}
+</style>
+<g>
+	<g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 64.0269 116.606)"><tspan x="0" y="0" class="st0 st1">Dungeon</tspan><tspan x="456.16" y="0" class="st0 st1">GP</tspan></text>
+<path d="M53,49c-6.01,6.01-34,0-34,0s-6.01-25.95,0-31.52s34,0,34,0S58.57,43.43,53,49z"/>
+<circle class="st2" cx="16" cy="58" r="18.38"/>
+<path d="M749,111.75c4.93,4.93,27.88,0,27.88,0s5.26-24.49,0-29.75c-4.93-4.93-27.88,0-27.88,0S743.74,106.49,749,111.75z"/>
+<ellipse class="st3" cx="779.34" cy="112.62" rx="15.33" ry="15.83"/>
+<path d="M714.97,117c-2.63-2.1-5.26-4.21-7.88-6.31V35h7.88C714.97,62.33,714.97,89.67,714.97,117z"/>
+<rect x="691.79" y="35" width="17.12" height="10"/>
+<path d="M691.79,35c-13.47,9.47-8.42,18.94-8.42,18.94c6.73,4.74,8.42-7.95,8.42-7.95"/>
+<path class="st3" d="M713.97,117c2.56-2.1,5.13-4.21,7.69-6.31V35h-7.69C713.97,62.33,713.97,89.67,713.97,117z"/>
+<rect x="721.18" y="35" transform="matrix(-1 -1.224647e-16 1.224647e-16 -1 1459.0674 79.6296)" class="st3" width="16.7" height="9.63"/>
+<path class="st3" d="M737.88,35c13.14,9.47,8.21,18.94,8.21,18.94c-6.57,4.74-8.21-7.95-8.21-7.95"/>
+<rect x="704" y="31" class="st2" width="20" height="3"/>
+<path class="st2" d="M717.74,33h-6.68c0,0-2.36-8.49,0-10.32c1.18-0.91,5.5-0.91,6.68,0C720.1,24.51,717.74,33,717.74,33z"/>
+</svg>
