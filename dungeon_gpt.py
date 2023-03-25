@@ -6,7 +6,7 @@ import base64
 import azure.cognitiveservices.speech as speechsdk
 
 
-from api_helper import get_dm_message, generate_prompt, generate_image, transcribe
+from api_helper import get_dm_message, generate_prompt, generate_image, transcribe, player_attributes
 
 app = Flask(__name__)
 app.config['JSONIFY_MIMETYPE'] = 'application/json'
@@ -84,7 +84,7 @@ def character_creation():
             intelligence = data.get('intelligence')
             wisdom = data.get('wisdom')
             charisma = data.get('charisma')
-            player_attributes = {'name': name,
+            input_attributes = {'name': name,
                                 'archetype': archetype,
                                 'strength': strength,
                                 'dexterity': dexterity,
@@ -92,11 +92,16 @@ def character_creation():
                                 'intelligence': intelligence,
                                 'wisdom': wisdom,
                                 'charisma': charisma}
+            update_player_attributes(input_attributes)
         else:
             player_attributes = {'name': 'Invalid request received.'}
         return jsonify({"player_attributes": player_attributes})
     else:
         return render_template('character_creation.html')
+    
+def update_player_attributes(input_attributes):
+    global player_attributes
+    player_attributes = input_attributes
 
 
 def get_dm_message_json(player_message):

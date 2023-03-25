@@ -7,6 +7,10 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
+    /* background-image: url("/static/homepage_background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; */
 }
 
 .container {
@@ -21,7 +25,7 @@ header {
 }
 
 .logo {
-    max-width: 200px;
+    width: 66%;
     height: auto;
 }
 

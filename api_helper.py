@@ -2,7 +2,9 @@ import os
 from dotenv import load_dotenv
 import openai
 
-player_attributes = { 'name': "Rognar, a barbarian",
+player_attributes = None
+
+default_attributes = { 'name': "Rognar, a barbarian",
 'Strength': 6,
 'Dexterity': 2,
 'Constitution': 1,
@@ -11,11 +13,11 @@ player_attributes = { 'name': "Rognar, a barbarian",
 'Charisma': 5}
 
 DM_SYSTEM_COMMAND = {'role': 'system',
-                     'content': f'''You are a humorous dungeon master for a dungeons and dragons game. 
+                     'content': f'''You are a dungeon master for a dungeons and dragons game. 
                      When I initially respond with "Where am I?", you will begin a solo campaign where the user is the 
                      following character:
 ---
-{player_attributes}
+{player_attributes if player_attributes else default_attributes}
 ---
 As the Dungeon Master, you will progress the story based on the player's responses, working towards an eventual conclusion .
 
@@ -56,11 +58,11 @@ def get_dm_message(player_msg):
     message_obj = {'role': 'user', 'content': player_msg}
     messages.append(message_obj)
 
-    dm_response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=messages)
-
     # dm_response = openai.ChatCompletion.create(
-    #     model='gpt-4', messages=messages)
+    #     model="gpt-3.5-turbo", messages=messages)
+
+    dm_response = openai.ChatCompletion.create(
+        model='gpt-4', messages=messages)
     dm_message = dm_response['choices'][0]['message']['content']
 
     return dm_message
@@ -69,7 +71,7 @@ def get_dm_message(player_msg):
 def generate_prompt(dm_response):
     openai.api_key = os.getenv("OPENAI_API_KEY_TEXT")
     message_obj = {'role': 'user', 
-                   'content': f'''extract lighting, location, and environment information from the following paragraph, make a DALLE prompt from it, example: a town in the style of a World of Warcraft screenshot\n{dm_response}'''
+                   'content': f'''extract lighting, location, and environment information from the following paragraph, make a DALLE prompt(natural language sentence) from it\n{dm_response}'''
                    }
     messages.append(message_obj)
     model_engine = "gpt-3.5-turbo"
@@ -79,7 +81,7 @@ def generate_prompt(dm_response):
         max_tokens=20,
         temperature = 0.1
     )
-    image_prompt = completions['choices'][0]['message']['content'] + "In the style of a World of Warcraft screenshot"
+    image_prompt = completions['choices'][0]['message']['content'] + ". In the style of a World of Warcraft game cg."
     return image_prompt
 
 # creates a image based on image prompt

@@ -39,11 +39,24 @@ document.addEventListener('DOMContentLoaded', () => {
     adjustSliders();
 });
 
-
+document.addEventListener('DOMContentLoaded', () => {
+    const submit_button = document.getElementById('submit-button');
+    submitButton.addEventListener('click', submitForm);
+});
+// dan wyd i redid this file
+// can i replace it
+// 
 // Add this function to handle the form submission
+// got u.
 async function submitForm() {
     const playerName = document.getElementById('player_name').value;
     const playerDescription = document.getElementById('player_description').value;
+    const strength = document.getElementById('strength').value;
+    const dexterity = document.getElementById('dexterity').value;
+    const constitution = document.getElementById('constitution').value;
+    const intelligence = document.getElementById('intelligence').value;
+    const wisdom = document.getElementById('wisdom').value;
+    const charisma = document.getElementById('charisma').value;
 
     const attributeData = {};
     attributes.forEach(attr => {
@@ -52,12 +65,18 @@ async function submitForm() {
 
     const data = {
         player_name: playerName,
-        player_description: playerDescription,
-        attributes: attributeData
+        archetype: playerDescription,
+        // attributes: attributeData
+        strength: strength,
+        dexterity: dexterity,
+        constitution: constitution,
+        intelligence: intelligence,
+        wisdom: wisdom,
+        charisma: charisma
     };
 
     try {
-        const response = await fetch('/your-endpoint', {
+        const response = await fetch('/charater_creation', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,6 +86,10 @@ async function submitForm() {
 
         if (response.ok) {
             console.log('Form submitted successfully');
+            response.json()
+            .then(data => {
+                console.log(data);
+            })
         } else {
             console.error('Error submitting form:', response.statusText);
         }

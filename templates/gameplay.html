@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
     <title>DungeonGPT: An AI-powered Dungeon Game</title>
 </head>
 
 <body>
+    <img src="{{ url_for('static', filename='DungeonGPT.svg') }}" alt="DungeonGPT Logo" class="logo">
     <div id="story-content">
         <div id="loading-spinner" style="display: none;">
             <img src="{{ url_for('static', filename='spinner.gif') }}" alt="Loading...">
