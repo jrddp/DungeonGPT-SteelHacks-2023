@@ -4,6 +4,20 @@ const loading_spinner = document.getElementById("loading-spinner");
 const dm_message_container = document.getElementById("dm-message");
 const img_container = document.getElementById("img-container");
 
+async function synthesizeAndPlaySpeech(text) {
+  const formData = new FormData();
+  formData.append("text", text);
+  await fetch("/synthesize_speech", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      text: text
+    }),
+  });
+}
+
 player_response_form.addEventListener("submit", function (event) {
   event.preventDefault();
   let player_response = document.getElementById("player_response").value;
@@ -11,7 +25,7 @@ player_response_form.addEventListener("submit", function (event) {
   loading_spinner.style.display = "block";
   story_content_container.replaceChildren(loading_spinner);
 
-  fetch("/", {
+  fetch("/play", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,6 +38,7 @@ player_response_form.addEventListener("submit", function (event) {
     .then(data => {
       dm_message_container.innerText = data.dungeon_master_message;
       story_content_container.replaceChildren(dm_message_container, img_container);
+      synthesizeAndPlaySpeech(data.dungeon_master_message);
       fetchImage(data);
     })
     .catch(error => {
