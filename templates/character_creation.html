@@ -1,56 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='character_creation.css') }}">
     <title>Character Creation</title>
-    <script src="{{ url_for('static', filename='calAttributes.js') }}"></script>
 </head>
+
 <body>
-    <img src="{{ url_for('static', filename='DungeonGPT.svg') }}" alt="DungeonGPT Logo" class="logo">
     <h1>Character Creation</h1>
     <form>
         <label for="player_name">Player Name:</label>
-        <input type="text" id="player_name" name="player_name">
+        <input type="text" id="player_name" name="player_name" required>
         <br>
         <label for="player_description">Player Description:</label>
-        <input type="text" id="player_description" name="player_description">
+        <input type="text" id="player_description" name="player_description" required>
         <br>
         <div id="attributes">
-            <label for="strength">Strength:  Physical power and muscular strength.</label>
-            <input type="range" id="strength" name="strength" min="1" max="5" value="1">
-            <span id="strength-value">/5</span>
-            <br>
-            
-            <label for="Dexterity">Dexterity:  Agility, reflexes and hand-eye coordination.</label>
-            <input type="range" id="Dexterity" name="Dexterity" min="1" max="5" value="1">
-            <span id="strength-value">/5</span>
-            <br>
+            <div> <label for="strength">Strength:</label>
+                <input class="attr-input" type="range" id="strength" name="strength" min="1" max="5" value="1">
+                <span id="strength-value">1</span>
+                <br>
+            </div>
 
-            <label for="Constitution">Constitution:  Endurance and resistance to damage.</label>
-            <input type="range" id="Constitution" name="Constitution" min="1" max="5" value="1">
-            <span id="strength-value">/5</span>
-            <br>
+            <div> <label for="Dexterity">Dexterity:</label>
+                <input class="attr-input" type="range" id="dexterity" name="Dexterity" min="1" max="5" value="1">
+                <span id="dexterity-value">1</span>
+                <br>
+            </div>
 
-            <label for="Intelligence">Intelligence:  Mental capacity for learning and problem-solving.</label>
-            <input type="range" id="Intelligence" name="Intelligence" min="1" max="5" value="1">
-            <span id="strength-value">/5</span>
-            <br>
+            <div> <label for="Constitution">Constitution:</label>
+                <input class="attr-input" type="range" id="constitution" name="Constitution" min="1" max="5" value="1">
+                <span id="constitution-value">1</span>
+                <br>
+            </div>
 
-            <label for="Wisdom">Wisdom:  Common sense and perception ability.</label>
-            <input type="range" id="Wisdom" name="Wisdom" min="1" max="5" value="1">
-            <span id="strength-value">/5</span>
-            <br>
+            <div> <label for="Intelligence">Intelligence:</label>
+                <input class="attr-input" type="range" id="intelligence" name="Intelligence" min="1" max="5" value="1">
+                <span id="intelligence-value">1</span>
+                <br>
+            </div>
 
-            <label for="Charisma">Charisma: Persuasion, charm and social skills.</label>
-            <input type="range" id="Charisma" name="Charisma" min="1" max="5" value="1">
-            <span id="strength-value">/5</span>
-            <br>
+            <div> <label for="Wisdom">Wisdom:</label>
+                <input class="attr-input" type="range" id="wisdom" name="Wisdom" min="1" max="5" value="1">
+                <span id="wisdom-value">1</span>
+                <br>
+            </div>
+
+            <div> <label for="Charisma">Charisma:</label>
+                <input class="attr-input" type="range" id="charisma" name="Charisma" min="1" max="5" value="1">
+                <span id="strength-value">1</span>
+                <br>
+            </div>
 
         </div>
         <p>Total Attribute Points: <span id="total-attribute-points">0</span> / 15</p>
-        <button id="submit-button" type="button">Submit</button>
+        <button id="submit-button" type="submit">Submit</button>
     </form>
+    <script src="{{ url_for('static', filename='calcAttributes.js') }}" defer></script>
 </body>
+
 </html>
