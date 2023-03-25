@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Creation</title>
+    <script src="calAttributes.js" defer></script>
+</head>
+<body>
+    <h1>Character Creation</h1>
+    <form>
+        <label for="player_name">Player Name:</label>
+        <input type="text" id="player_name" name="player_name">
+        <br>
+        <label for="player_description">Player Description:</label>
+        <input type="text" id="player_description" name="player_description">
+        <br>
+        <div id="attributes">
+            <label for="strength">Strength:</label>
+            <input type="range" id="strength" name="strength" min="1" max="5" value="1">
+            <span id="strength-value">1</span>
+            <br>
+            
+            <label for="Dexterity">Dexterity:</label>
+            <input type="range" id="Dexterity" name="Dexterity" min="1" max="5" value="1">
+            <span id="strength-value">1</span>
+            <br>
+
+            <label for="Constitution">Constitution:</label>
+            <input type="range" id="Constitution" name="Constitution" min="1" max="5" value="1">
+            <span id="strength-value">1</span>
+            <br>
+
+            <label for="Intelligence">Intelligence:</label>
+            <input type="range" id="Intelligence" name="Intelligence" min="1" max="5" value="1">
+            <span id="strength-value">1</span>
+            <br>
+
+            <label for="Wisdom">Wisdom:</label>
+            <input type="range" id="Wisdom" name="Wisdom" min="1" max="5" value="1">
+            <span id="strength-value">1</span>
+            <br>
+
+            <label for="Charisma">Wisdom:</label>
+            <input type="range" id="Charisma" name="Charisma" min="1" max="5" value="1">
+            <span id="strength-value">1</span>
+            <br>
+
+        </div>
+        <p>Total Attribute Points: <span id="total-attribute-points">0</span> / 15</p>
+        <button id="submit-button" type="button">Submit</button>
+    </form>
+</body>
+</html>
