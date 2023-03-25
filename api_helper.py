@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import openai
 
+player_name = None
+player_description = None
 player_attributes = None
 player_image_link = None
 DM_SYSTEM_COMMAND = None
@@ -34,7 +36,7 @@ Make sure your message is complete and is never more than 175 words.
 Ensure to be cognizant of the current and remaining states to create an intentional and complete resolution. 
 The story should be of length remaining quests.'''}
 
-def update_system_command(player_name, player_desc, player_attributes):
+def update_system_command():
     global DM_SYSTEM_COMMAND
 
     DM_SYSTEM_COMMAND = {'role': 'system',
@@ -43,7 +45,7 @@ def update_system_command(player_name, player_desc, player_attributes):
                         following character:
     ---
     Player Name: {player_name}
-    Player Description: {player_desc}
+    Player Description: {player_description}
     {player_attributes}
     ---
     As the Dungeon Master, you will progress the story based on the player's responses, working towards an eventual conclusion .
@@ -67,6 +69,17 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 messages = [DM_SYSTEM_COMMAND]
 
+def update_player_name(name):
+    global player_name
+    player_name = name
+
+def update_player_description(desc):
+    global player_description
+    player_description = desc
+
+def update_player_attributes(attrs):
+    global player_attributes
+    player_attributes = attrs
 
 
 #Get players attributes including name attribute values and et al

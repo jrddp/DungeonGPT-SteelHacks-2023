@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gameplay.css') }}">
     <title>DungeonGPT: An AI-powered Dungeon Game</title>
 </head>
 
@@ -22,6 +22,7 @@
             src="{{ url_for('static', filename='spinner.gif') }}" alt="Image">
     </div>
     <div id="player-response">
+        <button id="record-speech", class="start-recording"></button>"
         <form id="player-response-form">
             <input type="text" id="player_response" name="player_response" placeholder="What will you do?" required>
             <button type="submit">Send</button>

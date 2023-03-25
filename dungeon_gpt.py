@@ -4,10 +4,10 @@ from flask import Flask, redirect, render_template, request, jsonify, url_for, s
 import azure.cognitiveservices.speech as speechsdk
 
 
-from api_helper import (get_dm_message, generate_prompt, generate_image, 
-                        generate_character_prompt, generate_character_image, 
-                        transcribe, player_attributes, 
-                        player_image_link, DM_SYSTEM_COMMAND, update_system_command)
+from api_helper import (get_dm_message, generate_prompt, generate_image,
+                        generate_character_prompt, generate_character_image,
+                        transcribe, update_player_attributes,
+                        update_player_description, update_player_name, update_system_command)
 
 
 app = Flask(__name__)
@@ -18,7 +18,8 @@ service_region = os.getenv("SPEECH_REGION")
 
 speech_config = speechsdk.SpeechConfig(
     subscription=speech_key, region=service_region)
-audio_config = speechsdk.audio.AudioOutputConfig(filename=".tmp/textSpeech.wav")
+audio_config = speechsdk.audio.AudioOutputConfig(
+    filename=".tmp/textSpeech.wav")
 # speech_config.set_speech_synthesis_output_format(speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3)
 
 speech_config.speech_synthesis_language = "en-US"
@@ -30,14 +31,17 @@ def synthesize_speech():
     print("Synthesizing speech...")
     print(request.get_json())
     text = request.get_json()['text']
-    speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+    speech_synthesizer = speechsdk.SpeechSynthesizer(
+        speech_config=speech_config, audio_config=audio_config)
     speech_synthesizer.speak_text(text)
     state = "done"
     return jsonify({"state": state})
 
+
 @app.route('/get-audio')
 def get_audio():
     return send_file('.tmp/textSpeech.wav', mimetype='audio/wav')
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -100,11 +104,14 @@ def character_creation():
                             'intelligence': intelligence,
                             'wisdom': wisdom,
                             'charisma': charisma}
+
+        update_player_name(player_name)
+        update_player_description(player_description)
         update_player_attributes(input_attributes)
+        update_system_command()
         return redirect(url_for("gameplay"))
     else:
         return render_template('character_creation.html')
-
 
 
 @app.route('/player_image', methods=['POST'])
@@ -112,21 +119,11 @@ def player_image():
     image_link = update_player_image_link(player_description)
     return jsonify({"player_image": image_link})
 
-    
-def update_player_attributes(input_attributes):
-    global player_attributes
-    player_attributes = input_attributes
-    update_system_command(player_name, player_description, player_attributes)
 
 def update_player_image_link(description):
     character_prompt = generate_character_prompt(description)
     player_image_link = generate_character_image(character_prompt)
     return player_image_link
-
-
-def update_dm_system_command():
-    global sys_comand
-    sys_comand = DM_SYSTEM_COMMAND
 
 
 def get_dm_message_json(player_message):

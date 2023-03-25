@@ -115,3 +115,47 @@ async function fetchAudio(){
       audio.play();
   });
 }
+
+const constraints = { audio: true };
+let mediaRecorder;
+let chunks = [];
+
+navigator.mediaDevices.getUserMedia(constraints)
+  .then(function(stream) {
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = function(e) {
+      chunks.push(e.data);
+    }
+
+    mediaRecorder.onstop = function() {
+      const blob = new Blob(chunks, { type: 'audio/wav' });
+      const formData = new FormData();
+      formData.append('audio', blob, 'audio.wav');
+
+      fetch('/process-audio', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+
+      chunks = [];
+    }
+  })
+  .catch(function(err) {
+    console.error('Error accessing microphone', err);
+  });
+
+document.getElementById('record-speech').addEventListener('click', function() {
+  mediaRecorder.start();
+  this.id = 'stop-recording';
+  this.className = 'stop-recording';
+});
+
+document.getElementById('stop-recording').addEventListener('click', function() {
+  mediaRecorder.stop();
+  this.id = 'record-speech';
+  this.className = 'start-recording';
+});
