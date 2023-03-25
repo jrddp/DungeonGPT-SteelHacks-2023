@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Creation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='character_creation.css') }}">
+    <title>Create Your Player</title>
 </head>
 
 <body>
     <h1>Character Creation</h1>
-    <form>
+    <form method="POST">
         <label for="player_name">Player Name:</label>
         <input type="text" id="player_name" name="player_name" required>
         <br>
@@ -24,31 +25,31 @@
             </div>
 
             <div> <label for="Dexterity">Dexterity:</label>
-                <input class="attr-input" type="range" id="dexterity" name="Dexterity" min="1" max="5" value="1">
+                <input class="attr-input" type="range" id="dexterity" name="dexterity" min="1" max="5" value="1">
                 <span id="dexterity-value">1</span>
                 <br>
             </div>
 
             <div> <label for="Constitution">Constitution:</label>
-                <input class="attr-input" type="range" id="constitution" name="Constitution" min="1" max="5" value="1">
+                <input class="attr-input" type="range" id="constitution" name="constitution" min="1" max="5" value="1">
                 <span id="constitution-value">1</span>
                 <br>
             </div>
 
             <div> <label for="Intelligence">Intelligence:</label>
-                <input class="attr-input" type="range" id="intelligence" name="Intelligence" min="1" max="5" value="1">
+                <input class="attr-input" type="range" id="intelligence" name="intelligence" min="1" max="5" value="1">
                 <span id="intelligence-value">1</span>
                 <br>
             </div>
 
             <div> <label for="Wisdom">Wisdom:</label>
-                <input class="attr-input" type="range" id="wisdom" name="Wisdom" min="1" max="5" value="1">
+                <input class="attr-input" type="range" id="wisdom" name="wisdom" min="1" max="5" value="1">
                 <span id="wisdom-value">1</span>
                 <br>
             </div>
 
             <div> <label for="Charisma">Charisma:</label>
-                <input class="attr-input" type="range" id="charisma" name="Charisma" min="1" max="5" value="1">
+                <input class="attr-input" type="range" id="charisma" name="charisma" min="1" max="5" value="1">
                 <span id="strength-value">1</span>
                 <br>
             </div>
