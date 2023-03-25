@@ -4,9 +4,11 @@ const story_content_container = document.getElementById("story-content");
 const loading_spinner = document.getElementById("loading-spinner");
 const dm_message_container = document.getElementById("dm-message");
 const img_container = document.getElementById("img-container");
+const load_text = document.getElementById("load-text");
 
 document.addEventListener("DOMContentLoaded", function () {
   sendResponse("Where am I?");
+  fetchPlayerImage();
 });
 
 async function synthesizeAndPlaySpeech(text) {
@@ -20,6 +22,14 @@ async function synthesizeAndPlaySpeech(text) {
     body: JSON.stringify({
       text: text,
     }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    fetchAudio();
+  })
+  .catch(error => {
+    console.error("Error:", error);
   });
 }
 
@@ -33,7 +43,7 @@ player_response_form.addEventListener("submit", function (event) {
 function sendResponse(player_response) {
   loading_spinner.style.display = "block";
   story_content_container.replaceChildren(loading_spinner);
-  player_response_container.replaceChildren();
+  player_response_container.replaceChildren(load_text);
 
   fetch("/play", {
     method: "POST",
@@ -50,6 +60,7 @@ function sendResponse(player_response) {
       story_content_container.replaceChildren(dm_message_container, img_container);
       player_response_container.replaceChildren(player_response_form);
       synthesizeAndPlaySpeech(data.dungeon_master_message);
+    
       fetchImage(data);
     })
     .catch(error => {
@@ -77,32 +88,30 @@ async function fetchImage(data) {
     });
 }
 
-// Create a new MediaRecorder object
-const mediaRecorder = new MediaRecorder(stream);
-
-// Set event handlers
-mediaRecorder.ondataavailable = function (event) {
-  // Send recorded data to Flask backend
-  const formData = new FormData();
-  formData.append("audio", event.data, "recorded-audio.webm");
-  fetch("/process-audio", {
+async function fetchPlayerImage() {
+  fetch("/player_image", {
     method: "POST",
-    body: formData,
   })
-    .then(response => response.json())
-    .then(data => {
-      dm_message_container.innerText = data.dungeon_master_message;
-      story_content_container.replaceChildren(dm_message_container, img_container);
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
-};
+  .then(response => response.json())
+  .then(data => {
+    console.log("Player image: " + data.player_image);
+  })
+  .catch(error => {
+    console.error("Error", error);
+  })
+}
 
-// Start recording
-mediaRecorder.start();
-
-// Stop recording after 5 seconds
-setTimeout(function () {
-  mediaRecorder.stop();
-}, 5000);
+async function fetchAudio(){
+  fetch('/get-audio')
+  .then(response => response.blob())
+  .then(blob => {
+      // create a blob URL from the blob
+      const blobUrl = URL.createObjectURL(blob);
+      
+      // create an Audio element and set its source to the blob URL
+      const audio = new Audio(blobUrl);
+      
+      // play the audio
+      audio.play();
+  });
+}

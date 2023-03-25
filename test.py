@@ -9,8 +9,8 @@ def test_generate_image(image_prompt):
     link = api_helper.generate_image(image_prompt)
     print(link)
 
-def test_generate_character_prompt(player_archetype):
-    result = api_helper.generate_character_prompt(player_archetype)
+def test_generate_character_prompt(player_description):
+    result = api_helper.generate_character_prompt(player_description)
     print(result)
 
 def test_generate_character_image(character_prompt):

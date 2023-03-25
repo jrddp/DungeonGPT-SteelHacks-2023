@@ -2,3 +2,5 @@ env/*
 __pycache__/*
 .env
 .venv/*
+.tmp/textSpeech.wav
+textSpeech.wav
