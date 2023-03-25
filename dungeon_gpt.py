@@ -32,6 +32,10 @@ def synthesize_speech():
     speech_synthesizer.speak_text_async(text)
     return ""
 
+@app.route('/', methods=['GET'])
+def index():
+    return render_template("index.html")
+
 
 @app.route('/play', methods=['GET', 'POST'])
 def gameplay():
@@ -51,11 +55,6 @@ def gameplay():
     return render_template('gameplay.html', dungeon_master_message=dungeon_master_message)
 
 
-@app.route('/', methods=['GET'])
-def index():
-    return render_template("index.html")
-
-
 @app.route('/process-image', methods=['POST'])
 def process_image():
     if request.is_json:
@@ -72,30 +71,32 @@ def process_audio():
     return get_dm_message_json(player_message)
 
 
-@app.route('/build-player', methods=['POST'])
-def build_player():
-    if request.is_json:
-        data = request.get_json()
-        name = data.get('name')
-        archetype = data.get('archetype')
-        strength = data.get('strength')
-        dexterity = data.get('dexterity')
-        constitution = data.get('constitution')
-        intelligence = data.get('intelligence')
-        wisdom = data.get('wisdom')
-        charisma = data.get('charisma')
-        player_attributes = {'name': name,
-                             'archetype': archetype,
-                             'strength': strength,
-                             'dexterity': dexterity,
-                             'constitution': constitution,
-                             'intelligence': intelligence,
-                             'wisdom': wisdom,
-                             'charisma': charisma}
-        print(player_attributes)
+@app.route('/character_creation', methods=['GET', 'POST'])
+def character_creation():
+    if request.method == 'POST':
+        if request.is_json:
+            data = request.get_json()
+            name = data.get('name')
+            archetype = data.get('archetype')
+            strength = data.get('strength')
+            dexterity = data.get('dexterity')
+            constitution = data.get('constitution')
+            intelligence = data.get('intelligence')
+            wisdom = data.get('wisdom')
+            charisma = data.get('charisma')
+            player_attributes = {'name': name,
+                                'archetype': archetype,
+                                'strength': strength,
+                                'dexterity': dexterity,
+                                'constitution': constitution,
+                                'intelligence': intelligence,
+                                'wisdom': wisdom,
+                                'charisma': charisma}
+        else:
+            player_attributes = {'name': 'Invalid request received.'}
+        return jsonify({"player_attributes": player_attributes})
     else:
-        player_attributes = {'name': 'Invalid request received.'}
-    return jsonify({"player_attributes": player_attributes})
+        return render_template('character_creation.html')
 
 
 def get_dm_message_json(player_message):
