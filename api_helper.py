@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import openai
 
 player_attributes = None
+player_image_link = None
+DM_SYSTEM_COMMAND = None
 
 default_attributes = { 'name': "Rognar, a barbarian",
 'Strength': 6,
@@ -31,6 +33,34 @@ attributes to either help them progress or hamper their quest. The dice is 20 si
 Make sure your message is complete and is never more than 175 words.
 Ensure to be cognizant of the current and remaining states to create an intentional and complete resolution. 
 The story should be of length remaining quests.'''}
+
+def update_system_command(player_name, player_desc, player_attributes):
+    global DM_SYSTEM_COMMAND
+
+    DM_SYSTEM_COMMAND = {'role': 'system',
+                        'content': f'''You are a dungeon master for a dungeons and dragons game. 
+                        When I initially respond with "Where am I?", you will begin a solo campaign where the user is the 
+                        following character:
+    ---
+    Player Name: {player_name}
+    Player Description: {player_desc}
+    {player_attributes}
+    ---
+    As the Dungeon Master, you will progress the story based on the player's responses, working towards an eventual conclusion .
+
+    In each quest, you will set the scene for the player and give them the challenge to complete 
+
+    In the beginning, you will set the scene for the player, describe the situation, and allude to a larger mission.
+
+    In every subsequent quest after the first one, you should roll a die that works in tandem with one of the player's 
+    attributes to either help them progress or hamper their quest. The dice is 20 sided each roll is evaluated out of 20.
+
+    Make sure your message is complete and is never more than 175 words.
+    Ensure to be cognizant of the current and remaining states to create an intentional and complete resolution. 
+    The story should be of length remaining quests.'''}
+
+    print(DM_SYSTEM_COMMAND)
+
 
 load_dotenv()
 
@@ -94,10 +124,10 @@ def generate_image(image_prompt):
     )
     return response['data'][0]['url']
 
-def generate_character_prompt(player_archetype):
+def generate_character_prompt(description):
     openai.api_key = os.getenv("OPENAI_API_KEY_TEXT")
     message_obj = {'role': 'user', 
-                   'content': f"imagine an description appearence of a character based on the description: {player_archetype if player_archetype else 'a barbarian'}"}
+                   'content': f"imagine an description appearence of a character based on the description: {description if description else 'a barbarian'}"}
     messages.append(message_obj)
     model_engine = "gpt-3.5-turbo"
     completions = openai.ChatCompletion.create(
